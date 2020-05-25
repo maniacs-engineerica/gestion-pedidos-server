@@ -10,7 +10,7 @@ class App {
         app.use(express.json())
         app.use(bodyParser.urlencoded({ extended: true }))
         app.set('json spaces', 4)
-        app.use('/service/products', productsRouter)
+        app.use('/api/products', productsRouter)
         this.app = app
     }
 
