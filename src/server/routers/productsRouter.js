@@ -1,29 +1,17 @@
 import express from 'express'
-import multer from 'multer'
-import path from 'path';
-import fs from 'fs';
 
 import ProductsApi from '../apis/productsApi.js';
+import { createUploader, getAllFiles } from '../helpers/FileHelper.js';
+
+import config from '../../../config.js'
 
 const router = express.Router()
 
 const api = new ProductsApi()
 
-const uploadPath = path.join(path.resolve(), '/src/server/uploads/')
+const uploader = createUploader(config.absoluteImageDir)
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        fs.mkdirSync(uploadPath, { recursive: true })
-        cb(null, uploadPath)
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
-})
-
-const upload = multer({ storage: storage })
-
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', uploader.single('image'), async (req, res) => {
     const newProduct = req.body
     try {
         if (req.file) {
@@ -33,6 +21,20 @@ router.post('/', upload.single('image'), async (req, res) => {
         res.status(201).json(product)
     } catch (e) {
         res.status(e.status).json(e)
+    }
+})
+
+router.get('/', async (req, res) => {
+    try {
+        const files = await getAllFiles(config.absoluteImageDir)
+        const dir = req.protocol + "://" + req.headers.host + config.publicImageDir + "/"
+        const results = []
+        files.forEach(file => {
+            results.push(dir + file)
+        })
+        res.status(200).json(results)
+    } catch (e) {
+        res.status(501).json(e.message)
     }
 })
 

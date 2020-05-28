@@ -1,7 +1,10 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
+
 import productsRouter from './routers/productsRouter.js'
+import config from '../../config.js'
+
 
 class App {
 
@@ -9,6 +12,7 @@ class App {
         const app = express()
         app.use(express.json())
         app.use(bodyParser.urlencoded({ extended: true }))
+        app.use(config.publicImageDir, express.static(config.absoluteImageDir));
         app.set('json spaces', 4)
         app.use('/api/products', productsRouter)
         this.app = app

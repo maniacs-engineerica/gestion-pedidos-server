@@ -6,8 +6,8 @@ const server = new Server()
 
 const router = express.Router()
 
-router.get('/addProduct', async (req, res) => {
-  res.sendFile(path.resolve() + "/test/addProduct.htm")
+router.get('/product', async (req, res) => {
+  res.sendFile(path.resolve() + "/test/product.htm")
 })
 
 server.addTestRouter('/test', router)
