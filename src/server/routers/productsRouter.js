@@ -5,6 +5,7 @@ import { createUploader, getAllFiles } from '../helpers/FileHelper.js';
 
 import config from '../../../config.js'
 
+
 const router = express.Router()
 
 const api = new ProductsApi()
@@ -33,6 +34,19 @@ router.get('/', async (req, res) => {
             results.push(dir + file)
         })
         res.status(200).json(results)
+    } catch (e) {
+        res.status(501).json(e.message)
+    }
+})
+
+router.get('/:id', async (req, res) => {
+    try {
+        const files = await getAllFiles(config.absoluteImageDir)
+        if (files.length == 0){
+            res.send("No file found")
+            return
+        }
+        res.sendFile(config.absoluteImageDir + files[0]);
     } catch (e) {
         res.status(501).json(e.message)
     }

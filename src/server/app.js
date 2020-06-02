@@ -18,8 +18,8 @@ class App {
         this.app = app
     }
 
-    addTestRouter(path, router) {
-        this.app.use(path, router)
+    addTestRouter(router) {
+        this.app.use('/test', router)
     }
 
     setOnReady(cb) {
