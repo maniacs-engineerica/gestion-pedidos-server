@@ -8,8 +8,8 @@ const server = new Server()
 
 const router = express.Router()
 
-router.get('/product', async (req, res) => {
-  res.sendFile(path.resolve() + "/test/product.htm")
+router.get('/upload', async (req, res) => {
+  res.sendFile(path.resolve() + "/test/upload.htm")
 })
 
 server.addTestRouter(router)
@@ -17,7 +17,7 @@ server.addTestRouter(router)
 const PORT = process.env.PORT || 5000
 
 const testPath = async () => {
-  const uri = `http://localhost:${PORT}/api/products`
+  const uri = `http://localhost:${PORT}/api/files/output/all`
   console.log(`Calling ${uri}`)
   const data = {
     method: 'GET',
@@ -33,7 +33,7 @@ const testPath = async () => {
 }
 
 const testDownload = async () => {
-  const uri = `http://localhost:${PORT}/api/products/:id`
+  const uri = `http://localhost:${PORT}/api/files/output/image-1591198031002.png`
   console.log(`Calling ${uri}`)
   const data = {
     method: 'GET',
@@ -42,14 +42,14 @@ const testDownload = async () => {
   }
   try {
     const response = await request(data)
-    fs.mkdirSync('test/download', {recursive: true})
-    fs.writeFile('test/download/image.png', response, 'binary', function(err){
+    fs.mkdirSync('test/download', { recursive: true })
+    fs.writeFile('test/download/image.png', response, 'binary', function (err) {
       if (err) {
         console.log(err);
         return
       }
       console.log('File saved.')
-  })
+    })
   } catch (e) {
     console.log(e)
   }

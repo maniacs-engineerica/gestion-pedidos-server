@@ -3,12 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import util from 'util';
 
-class FileError {
-  constructor(message, description) {
-    this.message = message
-    this.description = description
-  }
-}
+import FileError from '../errors/fileError.js'
 
 export function createUploader(destinationPath) {
   const storage = multer.diskStorage({
@@ -30,6 +25,6 @@ export async function getAllFiles(directoryPath) {
     const names = await readdir(directoryPath)
     return names
   } catch (e) {
-    throw FileError("Could not get files", e.message);
+    throw new FileError("Could not get files", e.message);
   }
 }
