@@ -1,4 +1,6 @@
-import App from "../src/server/app.js";
-const app = new App()
+import PurchasesApi from "../src/server/apis/purchasesApi.js"
 
-console.log("Esto es un test")
+const api = new PurchasesApi()
+api.add({})
+  .then(() => console.log("Pedido creado!"))
+  .catch(e => console.log(e));
