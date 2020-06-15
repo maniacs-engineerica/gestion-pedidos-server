@@ -7,7 +7,7 @@ class PurchasesDaoMemory extends PurchasesDao {
   }
 
 async add(purchase){
-  
+  console.log("Pedido almacenado")
 }
 
 }
