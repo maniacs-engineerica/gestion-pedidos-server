@@ -26,5 +26,18 @@ class PurchasesApi {
     notificator.send()
   }
 
+  async update(id, purchase){
+    Purchase.validate(purchase)
+    await this.dao.update(id, purchase)
+  }
+
+  async updatePurchaseState(id, purchase, state){
+    await this.update(id, purchase)
+    const message = new TwilioMessage("11-5795-6323", "El estado del pedido es " + state)
+    const twilio = new TwilioSender(message)
+    const notificator = new NotificationSender(twilio)
+    notificator.send()    
+  }
+
 }
 export default PurchasesApi

@@ -11,5 +11,9 @@ async add(purchase){
   console.log("Pedido almacenado")
 }
 
+async update(id, purchase) {
+  console.log("Pedido actualizado")
+}
+
 }
 export default PurchasesDaoMemory
