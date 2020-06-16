@@ -104,3 +104,4 @@ dist
 .tern-port
 launch.json
 src/server/uploads
+src/server/pdf/generated
