@@ -15,5 +15,9 @@ async update(id, purchase) {
   console.log("Pedido actualizado")
 }
 
+async getById(id){
+  
+}
+
 }
 export default PurchasesDaoMemory
