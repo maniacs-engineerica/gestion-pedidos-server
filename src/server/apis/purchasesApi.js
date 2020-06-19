@@ -19,15 +19,19 @@ class PurchasesApi {
 
     const newPurchase = await this.dao.add(purchase)
 
-    this.createPdf(newPurchase)
-    this.sendNotification(newPurchase.client, newPurchase.state)
+    this._createPdf(newPurchase)
+    this._notifyStateUpdate(newPurchase.client.phoneNumber, newPurchase.state)
 
     return newPurchase
   }
 
   async update(id, purchase) {
     Purchase.validate(purchase)
+    const stateChanged = await this._stateChanged(id, purchase)
     await this.dao.update(id, purchase)
+    if(stateChanged){
+      this._notifyStateUpdate("+541157956323", purchase.state)
+    }
   }
 
   async updatePurchaseState(id, purchase, state) {
@@ -38,14 +42,19 @@ class PurchasesApi {
     notificator.send()
   }
 
-  createPdf(purchase) {
-    const purchasePdfCreator = new PurchasePdfCreator(purchase)
-    const creator = new PdfCreator(purchasePdfCreator)
-    creator.create()
+  async _stateChanged(id, newPurchase){
+    const oldPurchase = await this.dao.getById(id)
+    return oldPurchase.state != newPurchase.state
   }
 
-  sendNotification(client, state){
-    const message = new TwilioMessage(client.phoneNumber, `El estado del pedido es '${state}'`)
+  _createPdf(purchase) {
+    const purchasePdfCreator = new PurchasePdfCreator(purchase)
+    const creator = new PdfCreator(purchasePdfCreator)
+    creator.create() 
+  }
+
+  _notifyStateUpdate(phone, state){
+    const message = new TwilioMessage(phone, "El estado del pedido es " + state)
     const twilio = new TwilioSender(message)
     const notificator = new NotificationSender(twilio)
     notificator.send()
