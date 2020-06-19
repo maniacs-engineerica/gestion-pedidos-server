@@ -1,10 +1,11 @@
-import PurchasesDAOFactory from "../data/purchase/daoFactory.js"
+
 import Purchase from "../model/Purchase.js"
 import NotificationSender from "../notification/NotificationSender.js"
 import TwilioSender, { TwilioMessage } from "../notification/TwilioSender.js"
 import PurchasePdfCreator from "../pdf/PurchasePdfCreator.js"
 import PdfCreator from "../pdf/PdfCreator.js"
 import InvalidRequestError from "../errors/invalidRequestError.js"
+import PurchasesDAOFactory from "../data/purchase/daoFactory.js"
 
 class PurchasesApi {
   constructor() {

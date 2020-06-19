@@ -1,6 +1,6 @@
 import PurchasesDao from './daoPurchases.js'
-import UsersDaoMemory from './daoUsersMemory.js';
-import ProductsDaoMemory from './daoProductsMemory.js';
+import UsersDaoMemory from '../user/daoUsersMemory.js';
+import ProductsDaoMemory from '../product/daoProductsMemory.js';
 import DaoError from '../../errors/daoError.js';
 
 class PurchasesDaoMemory extends PurchasesDao {
