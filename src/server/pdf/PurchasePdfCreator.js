@@ -16,7 +16,12 @@ const COLUMNS = [{
 {
   id: 'price',
   header: 'Precio',
-  width: 120
+  width: 60
+},
+{
+  id: 'total',
+  header: 'Importe',
+  width: 60
 }]
 
 export default class PurchasePdfCreator extends AbstractCreator {
@@ -31,7 +36,7 @@ export default class PurchasePdfCreator extends AbstractCreator {
 
     const builder = new PdfBuilder(`${path}/Pedido ${this.purchase.id}.pdf`)
       .setTitle(`Pedido de ${this.purchase.client.name}`)
-      .setDescription(`Fecha: ${this.purchase.date}`)
+      .setDescription(`Fecha: ${new Date(this.purchase.date).toUTCString()}`)
       .setColumns(COLUMNS)
       .setFooter(`Importe total: $${this.purchase.total}`);
 
@@ -39,7 +44,8 @@ export default class PurchasePdfCreator extends AbstractCreator {
       return {
         description: item.product.name,
         quantity: item.quantity,
-        price: `$${item.price}`
+        price: `$${item.product.price}`,
+        total: `$${item.quantity * item.product.price}`
       }
     })
 

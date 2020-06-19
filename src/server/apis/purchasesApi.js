@@ -4,6 +4,7 @@ import NotificationSender from "../notification/NotificationSender.js"
 import TwilioSender, { TwilioMessage } from "../notification/TwilioSender.js"
 import PurchasePdfCreator from "../pdf/PurchasePdfCreator.js"
 import PdfCreator from "../pdf/PdfCreator.js"
+import InvalidRequestError from "../errors/invalidRequestError.js"
 
 class PurchasesApi {
   constructor() {
@@ -11,32 +12,51 @@ class PurchasesApi {
   }
 
   async add(purchase) {
-    Purchase.validate(purchase)
-    await this.dao.add(purchase)
-    
-    //Crear y almacenar PDF
-    const purchasePdfCreator = new PurchasePdfCreator(purchase)
-    const creator = new PdfCreator(purchasePdfCreator)
-    const pdf = creator.create() 
+    PurchasesApi.checkPurchase(purchase)
 
-    //Llamar al cambio de estado
-    const message = new TwilioMessage("11-5795-6323", "El estado del pedido es 'Recibido'")
+    purchase.state = "Recibido";
+    purchase.date = new Date().toISOString()
+
+    const newPurchase = await this.dao.add(purchase)
+
+    this.createPdf(newPurchase)
+    this.sendNotification(newPurchase.client, newPurchase.state)
+
+    return newPurchase
+  }
+
+  async update(id, purchase) {
+    Purchase.validate(purchase)
+    await this.dao.update(id, purchase)
+  }
+
+  async updatePurchaseState(id, purchase, state) {
+    await this.update(id, purchase)
+    const message = new TwilioMessage("11-5795-6323", "El estado del pedido es " + state)
     const twilio = new TwilioSender(message)
     const notificator = new NotificationSender(twilio)
     notificator.send()
   }
 
-  async update(id, purchase){
-    Purchase.validate(purchase)
-    await this.dao.update(id, purchase)
+  createPdf(purchase) {
+    const purchasePdfCreator = new PurchasePdfCreator(purchase)
+    const creator = new PdfCreator(purchasePdfCreator)
+    creator.create()
   }
 
-  async updatePurchaseState(id, purchase, state){
-    await this.update(id, purchase)
-    const message = new TwilioMessage("11-5795-6323", "El estado del pedido es " + state)
+  sendNotification(client, state){
+    const message = new TwilioMessage(client.phoneNumber, `El estado del pedido es '${state}'`)
     const twilio = new TwilioSender(message)
     const notificator = new NotificationSender(twilio)
-    notificator.send()    
+    notificator.send()
+  }
+
+  static checkPurchase(purchase) {
+    try {
+      Purchase.validate(purchase)
+    } catch (error) {
+      throw new InvalidRequestError("El pedido no tiene un formato válido", error);
+    }
   }
 
 }

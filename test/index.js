@@ -1,31 +1,24 @@
 import PurchasesApi from "../src/server/apis/purchasesApi.js"
 
-const api = new PurchasesApi()
+testAddPurchase()
 
-const purchase = {
-  date: "10/10/2020",
-  client: {
-    name: "Matias Cohen"
-  },
-  total: 1024,
-  items: [
-    {
-      quantity: 2,
-      product: {
-        name: "Torta de chocolinas"
+function testAddPurchase() {
+  const api = new PurchasesApi()
+  const purchase = {
+    client: 0,
+    items: [
+      {
+        quantity: 2,
+        product: 0
       },
-      price: 40
-    },
-    {
-      quantity: 8,
-      product: {
-        name: "Budin de vainilla"
-      },
-      price: 35
-    }
-  ]
+      {
+        quantity: 8,
+        product: 1
+      }
+    ]
+  }
+
+  api.add(purchase)
+    .then((p) => console.log(`Pedido agregado: ${JSON.stringify(p)}`))
+    .catch(e => console.log(e))
 }
-
-api.add(purchase)
-  .then(() => console.log("Test creacion pedido finalizado!"))
-  .catch(e => console.log(e))
