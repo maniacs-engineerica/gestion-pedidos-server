@@ -24,6 +24,15 @@ class PurchasesDaoMemory extends PurchasesDao {
     return newPurchase
   }
 
+  async update(id, purchase) {
+      try {
+        this.purchases.splice(id, 1, purchase)
+        return purchase
+    } catch (error) {
+        throw new DaoError("Error de modificación", `No se pudo modificar el pedido ${id}`)
+    }
+  }
+
   async getById(id) {
     const purchase = this.purchases.find(p => p.id == id)
     if (!purchase) {
@@ -56,16 +65,7 @@ class PurchasesDaoMemory extends PurchasesDao {
     items.forEach(item => {
       item.product = products.find(p => p.id == item.product)
     })
-  }
-
-  async update(id, purchase) {
-      try {
-        this.purchases.splice(id, 1, purchase)
-        return purchase
-    } catch (error) {
-        throw new DaoError("Error de modificación", `No se pudo modificar el pedido ${id}`)
-    }
-  }
+  }  
 
   async checkProducts(purchase) {
     const ids = purchase.items.map(i => i.product)
