@@ -35,6 +35,14 @@ class PurchasesDaoMemory extends PurchasesDao {
     return purchase;
   }
 
+  async getAll() {
+    try {
+        return this.purchases
+    } catch (error) {
+        throw new DaoError('Error al obtener todos los pedidos', error)
+    }
+}
+
   async fillPurchaseData(purchase) {
     purchase.client = await this.usersDao.getById(purchase.client)
     await this.fillPurchaseItemsData(purchase.items)

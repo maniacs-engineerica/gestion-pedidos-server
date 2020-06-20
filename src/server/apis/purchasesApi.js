@@ -42,6 +42,20 @@ class PurchasesApi {
     return updatedPurchase
   }  
 
+  async get(queryParams){
+    let purchases
+
+    if(queryParams.size == 0) {
+      purchases = await this.dao.getAll()
+    } else if (queryParams.has('id')) {
+      purchases = await this.dao.getById(queryParams.get('id'))
+    } else {
+      throw new InvalidRequestError("Parámetros de búsqueda inválidos", "No se encontró " + queryParams)
+    }    
+
+    return purchases
+  }
+
   _validateUpdate(oldPurchase, newPurchase){
     const itemsChanged = JSON.stringify(oldPurchase.items) != JSON.stringify(newPurchase.items)
 
