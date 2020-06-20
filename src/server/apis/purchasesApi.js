@@ -6,6 +6,7 @@ import PurchasePdfCreator from "../pdf/PurchasePdfCreator.js"
 import PdfCreator from "../pdf/PdfCreator.js"
 import InvalidRequestError from "../errors/invalidRequestError.js"
 import PurchasesDAOFactory from "../data/purchase/daoFactory.js"
+import PurchaseStates from "../enums/PurchaseStates.js"
 
 class PurchasesApi {
   constructor() {
@@ -27,25 +28,27 @@ class PurchasesApi {
   }
 
   async update(id, purchase) {
-    Purchase.validate(purchase)
-    const stateChanged = await this._stateChanged(id, purchase)
-    await this.dao.update(id, purchase)
-    if(stateChanged){
-      this._notifyStateUpdate("+541157956323", purchase.state)
-    }
-  }
+    PurchasesApi.checkPurchase(purchase)
 
-  async updatePurchaseState(id, purchase, state) {
-    await this.update(id, purchase)
-    const message = new TwilioMessage("11-5795-6323", "El estado del pedido es " + state)
-    const twilio = new TwilioSender(message)
-    const notificator = new NotificationSender(twilio)
-    notificator.send()
-  }
-
-  async _stateChanged(id, newPurchase){
     const oldPurchase = await this.dao.getById(id)
-    return oldPurchase.state != newPurchase.state
+    this._validateUpdate(oldPurchase, purchase)
+
+    const updatedPurchase = await this.dao.update(id, purchase)
+
+    if(oldPurchase.state != updatedPurchase.state){
+      this._notifyStateUpdate(updatedPurchase.client.phoneNumber, updatedPurchase.state)
+    }
+
+    return updatedPurchase
+  }  
+
+  _validateUpdate(oldPurchase, newPurchase){
+    const itemsChanged = JSON.stringify(oldPurchase.items) != JSON.stringify(newPurchase.items)
+
+    if(itemsChanged && oldPurchase.state != PurchaseStates.Recibido){
+      throw new InvalidRequestError("Error de modificación", "No se pueden modificar los ítems de un pedido con estado: " + oldPurchase.state);
+    }
+
   }
 
   _createPdf(purchase) {

@@ -51,7 +51,12 @@ class PurchasesDaoMemory extends PurchasesDao {
   }
 
   async update(id, purchase) {
-    console.log("Pedido actualizado")
+      try {
+        this.purchases.splice(id, 1, purchase)
+        return purchase
+    } catch (error) {
+        throw new DaoError("Error de modificación", `No se pudo modificar el pedido ${id}`)
+    }
   }
 
   async checkProducts(purchase) {
