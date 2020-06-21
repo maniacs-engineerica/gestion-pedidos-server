@@ -72,7 +72,7 @@ class PurchasesApi {
   _notifyStateUpdate(phone, state){
     try {
       const text = "El estado del pedido es " + state
-      notificator.send(phone, text)
+      this.notificator.send(phone, text)
     }
     catch(err) {
       console.log("Falló el envío de sms \n Contenido: " +text + "\n Destinatario: " + phone)
