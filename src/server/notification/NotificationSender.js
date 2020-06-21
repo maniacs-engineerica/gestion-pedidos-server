@@ -2,7 +2,7 @@ export default class NotificationSender {
   constructor(sender) {
     this.sender = sender
   }
-  send() {
-    this.sender.send()
+  send(to, msg) {
+    this.sender.send(to, msg)
   }
 }

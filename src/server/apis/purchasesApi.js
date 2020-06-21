@@ -1,7 +1,4 @@
-
 import Purchase from "../model/Purchase.js"
-import NotificationSender from "../notification/NotificationSender.js"
-import TwilioSender, { TwilioMessage } from "../notification/TwilioSender.js"
 import PurchasePdfCreator from "../pdf/PurchasePdfCreator.js"
 import PdfCreator from "../pdf/PdfCreator.js"
 import InvalidRequestError from "../errors/invalidRequestError.js"
@@ -9,8 +6,9 @@ import PurchasesDAOFactory from "../data/purchase/daoFactory.js"
 import PurchaseStates from "../enums/PurchaseStates.js"
 
 class PurchasesApi {
-  constructor() {
+  constructor(notificator) {
     this.dao = PurchasesDAOFactory.getDao()
+    this.notificator = notificator
   }
 
   async add(purchase) {
@@ -72,10 +70,7 @@ class PurchasesApi {
   }
 
   _notifyStateUpdate(phone, state){
-    const message = new TwilioMessage(phone, "El estado del pedido es " + state)
-    const twilio = new TwilioSender(message)
-    const notificator = new NotificationSender(twilio)
-    notificator.send()
+    notificator.send(phone, "El estado del pedido es " + state)
   }
 
   static checkPurchase(purchase) {
