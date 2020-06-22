@@ -25,22 +25,21 @@ const COLUMNS = [{
 }]
 
 export default class PurchasePdfCreator extends AbstractCreator {
-  constructor(purchase) {
+  constructor() {
     super()
-    this.purchase = purchase
   }
 
-  create() {
+  create(purchase) {
     const path = config.purchasesPdfUrl
     fs.mkdirSync(path, { recursive: true });
 
-    const builder = new PdfBuilder(`${path}/Pedido ${this.purchase.id}.pdf`)
-      .setTitle(`Pedido de ${this.purchase.client.name}`)
-      .setDescription(`Fecha: ${new Date(this.purchase.date).toUTCString()}`)
+    const builder = new PdfBuilder(`${path}/Pedido ${purchase.id}.pdf`)
+      .setTitle(`Pedido de ${purchase.client.name}`)
+      .setDescription(`Fecha: ${new Date(purchase.date).toUTCString()}`)
       .setColumns(COLUMNS)
-      .setFooter(`Importe total: $${this.purchase.total}`);
+      .setFooter(`Importe total: $${purchase.total}`);
 
-    const rows = this.purchase.items.map(item => {
+    const rows = purchase.items.map(item => {
       return {
         description: item.product.name,
         quantity: item.quantity,

@@ -34,7 +34,7 @@ function getPurchasesRouter(){
             const updatedPurchase = await purchasesApi.update(req.params.id, purchase)
             res.json(updatedPurchase)
         } catch (error) {
-            res.status(error.status).json(err)
+            res.status(error.status).json(error)
         }
     })
 

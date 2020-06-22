@@ -1,5 +1,5 @@
 export default class AbstractCreator {
-  create(){
+  create(purchase){
     throw Error("Not implemented");
   }
 }

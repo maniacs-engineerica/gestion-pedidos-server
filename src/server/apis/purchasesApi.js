@@ -1,27 +1,24 @@
 import Purchase from "../model/Purchase.js"
-import PurchasePdfCreator from "../pdf/PurchasePdfCreator.js"
-import PdfCreator from "../pdf/PdfCreator.js"
 import InvalidRequestError from "../errors/invalidRequestError.js"
 import PurchasesDAOFactory from "../data/purchase/daoFactory.js"
 import PurchaseStates from "../enums/PurchaseStates.js"
+import config from "../../../config.js"
+import PurchaseNotificationSender from "../features/purchases/PurchaseNotificationSender.js"
+import PurchaseAdd from "../features/purchases/PurchaseAdd.js"
+import PdfCreator from "../pdf/PdfCreator.js"
+import PurchasePdfCreator from "../pdf/PurchasePdfCreator.js"
+import TwilioSender from "../notification/TwilioSender.js"
 
 class PurchasesApi {
-  constructor(notificator) {
+  constructor() {
     this.dao = PurchasesDAOFactory.getDao()
-    this.notificator = notificator
+    this.sender = new TwilioSender(config.twilio)
+    this.pdfCreator = new PdfCreator(new PurchasePdfCreator())
   }
 
   async add(purchase) {
-    PurchasesApi.checkPurchase(purchase)
-
-    purchase.state = "Recibido";
-    purchase.date = new Date().toISOString()
-
-    const newPurchase = await this.dao.add(purchase)
-
-    this._createPdf(newPurchase)
-    this._notifyStateUpdate(newPurchase.client.phoneNumber, newPurchase.state)
-
+    const add = new PurchaseAdd(this.dao, this.pdfCreator, this.sender)
+    const newPurchase = await add.run(purchase)
     return newPurchase
   }
 
@@ -60,23 +57,11 @@ class PurchasesApi {
     if(itemsChanged && oldPurchase.state != PurchaseStates.Recibido){
       throw new InvalidRequestError("Error de modificación", "No se pueden modificar los ítems de un pedido con estado: " + oldPurchase.state);
     }
-
-  }
-
-  _createPdf(purchase) {
-    const purchasePdfCreator = new PurchasePdfCreator(purchase)
-    const creator = new PdfCreator(purchasePdfCreator)
-    creator.create() 
   }
 
   _notifyStateUpdate(phone, state){
-    try {
-      const text = "El estado del pedido es " + state
-      this.notificator.send(phone, text)
-    }
-    catch(err) {
-      console.log("Falló el envío de sms \n Contenido: " +text + "\n Destinatario: " + phone)
-    }
+    const notificator = new PurchaseNotificationSender(this.sender)
+    notificator.send(phone, state)
   }
 
   static checkPurchase(purchase) {
