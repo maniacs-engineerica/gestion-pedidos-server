@@ -3,14 +3,15 @@ import Purchase from "../../model/Purchase.js";
 import PurchaseNotificationSender from "./PurchaseNotificationSender.js";
 
 export default class PurchaseAdd {
-  constructor(dao, pdfCreator, sender) {
+  constructor(dao, pdfCreator, notificator, validator) {
     this.dao = dao
     this.pdfCreator = pdfCreator
-    this.sender = sender
+    this.notificator = notificator
+    this.validator = validator
   }
 
   async run(purchase) {
-    PurchaseAdd.checkPurchase(purchase)
+    this.validator.validate(purchase)
 
     purchase.state = "Recibido";
     purchase.date = new Date().toISOString()
@@ -28,16 +29,7 @@ export default class PurchaseAdd {
   }
 
   _notifyStateUpdate(phone, state){
-    const notificator = new PurchaseNotificationSender(this.sender)
-    notificator.send(phone, state)
-  }
-
-  static checkPurchase(purchase){
-    try {
-      Purchase.validate(purchase)
-    } catch (error) {
-      throw new InvalidFormatError("El pedido no tiene un formato válido", error);
-    }
+    this.notificator.send(phone, state)
   }
 
 }
