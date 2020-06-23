@@ -35,5 +35,29 @@ class PurchasesApi {
     return purchases
   }
 
+  _validateUpdate(oldPurchase, newPurchase){
+    const itemsChanged = JSON.stringify(oldPurchase.items) != JSON.stringify(newPurchase.items)
+
+    if(itemsChanged && oldPurchase.state != PurchaseStates.Recibido){
+      throw new InvalidRequestError("Error de modificación", "No se pueden modificar los ítems de un pedido con estado: " + oldPurchase.state);
+    }
+  }
+
+  _notifyStateUpdate(phone, state){
+    const notificator = new PurchaseNotificationSender(this.sender)
+    notificator.send(phone, state)
+  }
+
+  static checkPurchase(purchase) {
+    try {
+      Purchase.validate(purchase)
+    } catch (error) {
+      throw new InvalidRequestError("El pedido no tiene un formato válido", error);
+    }
+  }
+  async deletedeletePurchase(id) {
+  await  this.dao.deletePurchase(id)
+  }
+
 }
 export default PurchasesApi
