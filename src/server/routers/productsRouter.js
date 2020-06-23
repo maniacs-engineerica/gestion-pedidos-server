@@ -17,6 +17,17 @@ function getProductsRouter() {
         }
     })
 
+    
+    router.get('/', async (req, res) => {
+        try {
+            const queryParams = new Map(Object.entries(req.query))
+            const purchases = await purchasesApi.get(queryParams)
+            res.json(purchases)
+        } catch (error) {
+            res.status(error.status).json(error)
+        }
+    })
+
     return router
 }
 

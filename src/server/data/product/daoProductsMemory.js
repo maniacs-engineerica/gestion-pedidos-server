@@ -32,5 +32,9 @@ class ProductsDaoMemory extends ProductsDao {
     this.products.splice(index, 1, product)
   }
 
+  async getAll(){
+    return this.products
+  }
+
 }
 export default ProductsDaoMemory

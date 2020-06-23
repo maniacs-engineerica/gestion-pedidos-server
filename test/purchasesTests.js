@@ -17,8 +17,9 @@ export function addPurchase() {
       {
         quantity: 8,
         product: 1
-      }
+      }      
     ]
+
   }
   const dao = PurchasesDAOFactory.getDao()
   const creator = new PdfCreator(new PurchasePdfCreator())
