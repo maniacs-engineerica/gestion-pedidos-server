@@ -6,7 +6,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "PORT=3000 node src/main.js",
-    "test": "node test/index.js"
+    "test": "PORT=3000 node test/index.js"
   },
   "repository": {
     "type": "git",
