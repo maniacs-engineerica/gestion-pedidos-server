@@ -38,6 +38,16 @@ function getPurchasesRouter(){
         }
     })
 
+    router.delete('/:id', async (req, res) => {
+        try {
+            await purchasesApi.deletePurchase(req.params.id)
+            res.status(201)
+        } catch (error) {
+            res.status(error.status).json(error)
+        }
+    }
+        )
+
     return router
 }
 

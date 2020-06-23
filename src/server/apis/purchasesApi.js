@@ -71,6 +71,9 @@ class PurchasesApi {
       throw new InvalidRequestError("El pedido no tiene un formato válido", error);
     }
   }
+  async deletedeletePurchase(id) {
+  await  this.dao.deletePurchase(id)
+  }
 
 }
 export default PurchasesApi

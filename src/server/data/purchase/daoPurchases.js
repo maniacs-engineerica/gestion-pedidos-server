@@ -14,5 +14,8 @@ class PurchasesDao {
   async getAll() {
     throw new Error("Not implemented");
   }
+  async deletePurchase(id) {
+    throw new Error("Not implemented");
+  }
 }
 export default PurchasesDao
