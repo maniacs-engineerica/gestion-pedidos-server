@@ -6,6 +6,16 @@ function getProductsRouter() {
 
     const productsApi = new ProductsApi()
 
+    router.post('/', async (req, res) => {
+        const product = req.body
+        try {
+            const newProduct = await productsApi.add(product)
+            res.status(201).json(newProduct)
+        } catch (error) {
+            res.status(error.status).json(error)
+        }
+    })
+
     router.put('/:id', async (req, res) => {
         const product = req.body
 

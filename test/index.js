@@ -1,6 +1,7 @@
-import { updateProduct, getAllProducts } from "./productsTests.js"
+import { updateProduct, getAllProducts, addProduct } from "./productsTests.js"
 import { addPurchase } from "./purchasesTests.js"
 
 // updateProduct()
 // getAllProducts()
 // addPurchase()
+// addProduct()
