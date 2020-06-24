@@ -25,7 +25,8 @@ export function getAllProducts(){
   const dao = ProductsDAOFactory.getDao()
   const getAll = new ProductGet(dao)
   const queryParams = new Map()
-  
+
+    
   getAll.run(queryParams)
   .then((result) => console.log(`Listado de productos: + ${JSON.stringify(result)}`))
   .catch(error => console.log(error))

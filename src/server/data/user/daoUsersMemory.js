@@ -5,7 +5,27 @@ const users = [
   {
     id: 0,
     name: "Matias Cohen",
-    phoneNumber: "1157956323"
+    phoneNumber: "1157956323",
+    preferences: [{
+      bizcocho: {
+        vainilla: true,
+        chocolate: false
+      },
+      relleno: {
+        ddl : true,        
+        nutella: false,
+        crema: false,
+        merengue: false,
+        frutos_secos: false,
+        frutas: false
+    },
+    cubierta: {
+      chocolate: true,
+      crema_chantilly: false,
+      fondant: false,
+      merengue: false
+    }
+  }]  
   }
 ]
 

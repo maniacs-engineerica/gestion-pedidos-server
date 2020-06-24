@@ -5,12 +5,52 @@ const products = [
   {
     id: 0,
     name: "Tora de chocolinas",
-    price: 40
+    price: 40,
+    bizcocho: {
+            vainilla: false,
+            chocolate: false
+        },
+        peso_gr: 1500,
+        capas : 2,
+        relleno : {
+            ddl : true,
+            nutella : false,
+            crema : false,
+            merengue: false,
+            frutos_secos: false,
+            frutas : false
+        },
+        cubierta: {
+            chocolate: true,
+            crema_chantilly: false,
+            fondant: false,
+            merengue: false
+        }
   },
   {
     id: 1,
     name: "Budín",
-    price: 25
+    price: 25,
+    bizcocho: {
+      vainilla: true,
+      chocolate: false
+    },
+    peso_gr: 1500,
+    capas : 2,
+    relleno : {
+      ddl : false,
+      nutella : false,
+      crema : false,
+      merengue: false,
+      frutos_secos: false,
+      frutas : false
+    },
+    cubierta: {
+      chocolate: false,
+      crema_chantilly: false,
+      fondant: false,
+      merengue: false
+    }
   },
 ]
 
