@@ -8,7 +8,7 @@ class SuggestionsApi{
         this.usersDao = UsersDAOFactory.getDao();
     }
 
-    async get(){
+    async get(queryParams){
         const get = new SuggestionsGet(this.usersDao, this.productsDao)
         const suggestions = await get.run(queryParams)
         return suggestions

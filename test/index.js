@@ -2,7 +2,7 @@ import { updateProduct, getAllProducts } from "./productsTests.js"
 import { addPurchase } from "./purchasesTests.js"
 import { getSuggestions } from "./suggestionsTest.js"
 
-updateProduct()
-getAllProducts()
-addPurchase()
+//updateProduct()
+//getAllProducts()
+//addPurchase()
 getSuggestions()

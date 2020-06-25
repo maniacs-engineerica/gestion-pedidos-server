@@ -12,6 +12,6 @@ export function getSuggestions(){
 
     get.run(queryParams)
     .then((suggest) => console.log(`Sugerencias encontradas ${JSON.stringify(suggest)}`))
-    .catch((error) => console.log(error))    
+    .catch((error) => console.log(error))
 
 }

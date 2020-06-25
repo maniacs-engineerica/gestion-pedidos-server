@@ -17,7 +17,7 @@ function getPurchasesRouter(){
     })
 
     router.post('/', async (req, res) => {
-        const purchase = req.body
+        const purchase = req. body
 
         try {
             const newPurchase = await purchasesApi.add(purchase)
