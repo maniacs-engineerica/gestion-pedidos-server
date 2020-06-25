@@ -1,4 +1,4 @@
-export default class ProductUpdate {
+export default class ProductAdd {
   constructor(dao, validator, imageUploader) {
     this.dao = dao
     this.validator = validator
@@ -12,8 +12,8 @@ export default class ProductUpdate {
       product.imageName = await this.uploader.upload(product.image)
     }
 
-    await this.dao.update(product)
+    const newProduct = await this.dao.add(product)
 
-    return product
+    return newProduct
   }
 }

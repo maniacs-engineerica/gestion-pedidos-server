@@ -64,6 +64,12 @@ class ProductsDaoMemory extends ProductsDao {
     return this.products.filter(p => ids.includes(p.id))
   }
 
+  async add(product){
+    product.id = this.products.length
+    this.products.push(product)
+    return product
+  }
+
   async update(product){
     const index = this.products.findIndex(p => p.id == product.id)
     if (index < 0){
