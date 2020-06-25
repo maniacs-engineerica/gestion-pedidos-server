@@ -1,12 +1,9 @@
 import ProductsDAOFactory from "../data/product/daoFactory.js";
 import ProductUpdate from "../features/products/ProductUpdate.js";
-<<<<<<< HEAD
-import ProductGet from "../features/products/ProductGet.js"
-=======
 import ProductValidator from "../validators/ProductValidator.js";
 import ImageUploader from "../uploaders/ImageUploader.js";
 import ProductAdd from "../features/products/ProductAdd.js";
->>>>>>> 4823be51d91b64ce332c4ffc3d3a1b3c70f4410f
+import ProductGet from "../features/products/ProductGet.js"
 
 class ProductsApi {
   constructor() {

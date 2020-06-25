@@ -47,7 +47,10 @@ export function getAllProducts() {
   const queryParams = new Map()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+>>>>>>> 4823be51d91b64ce332c4ffc3d3a1b3c70f4410f
 =======
 >>>>>>> 4823be51d91b64ce332c4ffc3d3a1b3c70f4410f
   getAll.run(queryParams)
