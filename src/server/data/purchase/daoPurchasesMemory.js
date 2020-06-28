@@ -36,7 +36,7 @@ class PurchasesDaoMemory extends PurchasesDao {
   async getById(id) {
     const purchase = this.purchases.find(p => p.id == id)
     if (!purchase) {
-      throw new DaoError("pedido no existente", `no se encontró un pedidp para el id: ${id}`)
+      throw new DaoError("pedido no existente", `no se encontró un pedido para el id: ${id}`)
     }
 
     await this.fillPurchaseData(purchase)

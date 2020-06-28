@@ -8,6 +8,7 @@ import TwilioSender from "../notification/TwilioSender.js"
 import PurchaseGet from "../features/purchases/PurchaseGet.js"
 import PurchaseUpdate from "../features/purchases/PurchaseUpdate.js"
 import PurchaseValidator from '../validators/PurchaseValidator.js'
+import PurchaseDelete from "../features/purchases/PurchaseDelete.js"
 
 class PurchasesApi {
   constructor() {
@@ -55,8 +56,10 @@ class PurchasesApi {
       throw new InvalidRequestError("El pedido no tiene un formato válido", error);
     }
   }
-  async deletedeletePurchase(id) {
-  await  this.dao.deletePurchase(id)
+  async deletePurchase(id) {
+  const deleting = new PurchaseDelete(this.dao);
+  deleting.deletePurchase(id)
+
   }
 
 }
