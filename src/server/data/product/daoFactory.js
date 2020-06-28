@@ -1,5 +1,5 @@
 import ProductsDaoMemory from "./daoProductsMemory.js"
-import config from '../../../config.js'
+import config from "../../../../config.js"
 
 
 class ProductsDAOFactory {
