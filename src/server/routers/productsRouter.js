@@ -38,6 +38,15 @@ function getProductsRouter() {
         }
     })
 
+    router.delete('/:id', async (req, res) => {
+        try {
+            await productsApi.deleteProduct(req.params.id)
+            res.status(201)
+        } catch (error) {
+            res.status(error.status).json(error)
+        }
+    })
+
     return router
 }
 

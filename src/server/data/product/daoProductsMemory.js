@@ -61,7 +61,12 @@ class ProductsDaoMemory extends ProductsDao {
   }
 
   async getByIds(ids) {
-    return this.products.filter(p => ids.includes(p.id))
+    const product = this.products.filter(p => ids.includes(p.id))
+
+    if (!product) {
+      throw new DaoError("producto no existente", `no se encontró un producto para el id: ${ids}`)
+    }
+    return product
   }
 
   async add(product){
@@ -77,6 +82,11 @@ class ProductsDaoMemory extends ProductsDao {
     }
     this.products.splice(index, 1, product)
   }
+  async deleteProducto(id) {
+    await this.getByIds(id)
+    this.products = this.products.filter(products => products.id !== id)
+    return this.products
+    }
 
   async getAll(){
     return this.products

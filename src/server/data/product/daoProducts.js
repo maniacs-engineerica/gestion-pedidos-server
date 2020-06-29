@@ -10,6 +10,9 @@ class ProductsDao {
   async update(product){
     throw new Error("Not implemented");
   }
+  async delete(id){
+  throw new Error("Not implemented");
+  }
 
   async getAll(){
     throw new Error("Not implemented");
