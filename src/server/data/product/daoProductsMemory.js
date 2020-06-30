@@ -60,8 +60,8 @@ class ProductsDaoMemory extends ProductsDao {
     this.products = products;
   }
 
-  async getByIds(ids) {
-    return this.products.filter(p => ids.includes(p.id))
+    async getById(ids) {
+      return this.products.filter(p => ids.includes(p.id))
   }
 
   async add(product){
