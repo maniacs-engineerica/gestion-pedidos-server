@@ -5,8 +5,10 @@ const envs = {
     mode: process.env.DEV_MODE,
     port: process.env.DEV_PORT,
     db: {
-      client: process.env.DEV_DB_CLIENT,
-      dbPath: process.env.DEV_DB_PATH
+      client: process.env.PROD_DB_CLIENT,
+      name: process.env.PROD_DB_NAME,
+      cnxStr: process.env.PROD_DB_CNX_STR
+      
   },
     purchasesPdfUrl: process.env.DEV_PDFURL,
     fileStorageUrl: process.env.DEV_URL,    

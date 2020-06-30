@@ -83,7 +83,7 @@ class ProductsDaoMemory extends ProductsDao {
     this.products.splice(index, 1, product)
   }
   async deleteProducto(id) {
-    await this.getByIds(id)
+    await this.getById(id)
     this.products = this.products.filter(products => products.id !== id)
     return this.products
     }

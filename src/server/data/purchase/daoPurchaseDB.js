@@ -1,6 +1,8 @@
 import PurchasesDao from "./daoPurchases.js"
 import DbClientFactory from "../../db/DbClientFactory.js"
-import CustomError from "../../errors/CustomError.js"
+import DaoError from "../../errors/daoError.js"
+import InvalidRequestError from "../../errors/invalidRequestError.js"
+import InvalidFormatError from "../../errors/invalidFormatError.js"
 
 class PurchasesDaoDB extends PurchasesDao {
 
@@ -12,19 +14,20 @@ class PurchasesDaoDB extends PurchasesDao {
     
     async add(purchase){
         let result
-        try {
-            console.log(purchase)            
+        try {                     
             const db = await this.dbcliente.getDb()
-            const collection = await db.collection('purchases')            
+            const collection = await db.collection('purchases')                    
             result = await collection.findOneAndUpdate({ id: purchase.id }, {$setOnInsert: purchase}, {upsert: true})            
 
         } catch(err){
-        throw new CustomError(500, 'error al insertar el pedido', err)
+        throw new DaoError('error al insertar el pedido', err)
         }
     
         if( result.nModified == 0 ){
-            throw new CustomError(400, 'ya existe un pedido con ese id', {id: product.id})
+            throw new InvalidRequestError("No agregado",'ya existe un pedido con ese id', {id: product.id})
         }
+
+        console.log(result.name)
         return result
     }
 
@@ -37,11 +40,11 @@ class PurchasesDaoDB extends PurchasesDao {
             result = await collection.findOneAndReplace({ id: id }, purchase, { projection: { _id: 0}})
             
         } catch(err){
-            throw new CustomError(500, 'error al modificar el pedido', err)
+            throw new DaoError('error al modificar el pedido', err)
         }
         
-        if (!result.ok != 1) {
-                throw new CustomError(404, `no se encontró pedido con id: ${purchase.id}`)
+        if (result.ok != 1) {
+                throw new InvalidFormatError("No encontrado",`no se encontró pedido con id: ${purchase.id}`)
         }        
         return result
     }
@@ -55,7 +58,7 @@ class PurchasesDaoDB extends PurchasesDao {
             const products = collection.find().toArray()
             return products
         } catch(err){
-           throw new CustomError(500, 'error al obtener todos los pedidos') 
+           throw new DaoError(500, 'error al obtener todos los pedidos') 
         }
     }
 
@@ -86,7 +89,7 @@ class PurchasesDaoDB extends PurchasesDao {
         purchase.total = purchase.items.reduce((prev, curr) => prev += curr.quantity * curr.product.price , 0)
       }
 
-    //TO DO
+    
     async fillPurchaseItemsData(items) {
         const ids = items.map(i => i.product)
         const products = await this.productsDao.getByIds(ids)
@@ -96,7 +99,7 @@ class PurchasesDaoDB extends PurchasesDao {
         })
     }
     
-    //TO DO
+    
     async checkProducts(purchase) {
         const ids = purchase.items.map(i => i.product)
         const products = await this.productsDao.getByIds(ids)
@@ -106,9 +109,8 @@ class PurchasesDaoDB extends PurchasesDao {
       const invalidId = ids.find(id => !productsIds.includes(id))
       throw new DaoError("producto inválido", `el item con id de producto: ${invalidId} no existe`);
     }
-  }
-  
-    //TO DO
+  }  
+    
     async deletePurchase(id) {
         await this.getById(id)
         this.purchases = this.purchases.filter(purchase => purchase.id !== id)

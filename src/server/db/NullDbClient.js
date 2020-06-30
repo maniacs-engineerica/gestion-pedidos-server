@@ -1,4 +1,4 @@
-import CustomError from '../errors/CustomError.js'
+import DaoError from '../errors/daoError.js'
 import DbClient from './DbClient.js'
 
 class NullDbClient extends DbClient {
@@ -14,11 +14,11 @@ class NullDbClient extends DbClient {
     }
 
     async getClient() {
-        throw new CustomError(500, "no se ha configurado ningun cliente de bd para conectarse", true)
+        throw new DaoError( "no se ha configurado ningun cliente de bd para conectarse", true)
     }
 
     async getDb() {
-        throw new CustomError(500, "no se ha configurado ningun cliente de bd para conectarse", true)
+        throw new DaoError("no se ha configurado ningun cliente de bd para conectarse", true)
     }
 }
 

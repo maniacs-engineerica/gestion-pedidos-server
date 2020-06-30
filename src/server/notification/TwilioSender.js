@@ -1,6 +1,6 @@
 import Joi from '@hapi/joi'
 import twilio from "twilio"
-import SmsServiceError from '../errors/smsServiceError'
+// import SmsServiceError from '../errors/smsServiceError'
 import AbstractSender from "./AbstractSender.js";
 
 export default class TwilioSender extends AbstractSender {

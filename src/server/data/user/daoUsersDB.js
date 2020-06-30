@@ -15,10 +15,7 @@ class UsersDaoDB extends UsersDao {
         try{
             const db = await this.dbclient.getDb()
             const user = await db.collection('users')
-            console.log(id)
-            console.log(user)
             buscado = await user.findOne({id: id})   
-            console.log(buscado)
         }
         catch(err){
             throw new DaoError("Error al obtener los datos", err)

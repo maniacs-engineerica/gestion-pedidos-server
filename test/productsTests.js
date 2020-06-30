@@ -17,7 +17,7 @@ export function addProduct() {
   const product = {
     id: randomId,
     name: "Postre Balcarce",
-    image: "img",
+    image: img,
     price: 40,
     bizcocho: {
             vainilla: false,
@@ -53,10 +53,29 @@ export function addProduct() {
 
 export function updateProduct() {
   const product = {
-    id: "0",
-    name: "Torta Update",
-    price: 55,
-    image: `fs.createReadStream(path.resolve() + "/test/files/13.png")`
+    id: "b03d2459-5d6e-49f7-b458-384f3952776c",
+    name: "Tora de Update",
+    price: 40,
+    bizcocho: {
+            vainilla: false,
+            chocolate: false
+        },
+        peso_gr: 1500,
+        capas : 2,
+        relleno : {
+            ddl : true,
+            nutella : false,
+            crema : false,
+            merengue: false,
+            frutos_secos: false,
+            frutas : false
+        },
+        cubierta: {
+            chocolate: true,
+            crema_chantilly: false,
+            fondant: false,
+            merengue: false
+        }
   }
 
   const dao = ProductsDAOFactory.getDao()

@@ -8,9 +8,9 @@ export default class ProductAdd {
   async run(product) {
     this.validator.validate(product)
 
-   /* if (product.image) {
+  if (product.image) {
       product.imageName = await this.uploader.upload(product.image)
-    }*/
+    }
 
     const newProduct = await this.dao.add(product)
 

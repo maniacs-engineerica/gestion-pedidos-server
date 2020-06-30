@@ -4,10 +4,10 @@ import { getSuggestions} from "./suggestionsTest.js"
 
 
 updateProduct()
-addProduct()
 getAllProducts()
 addPurchase()
 getAllPurchases()
 getSuggestions()
+addProduct()
 
 

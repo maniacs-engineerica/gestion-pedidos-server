@@ -4,8 +4,7 @@ import config from "../../../../config.js"
 
 class UsersDAOFactory {
     static getDao(){
-        //switch(config.mode){         
-        switch('db'){      
+        switch(config.mode){
             case 'db' : return new UsersDaoDB();
             case 'cache' : return new UsersDaoMemory();
         default: throw "invalid mode. check system config!"

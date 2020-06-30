@@ -1,6 +1,6 @@
 import MyMongoClient from './MyMongoClient.js'
 import NullDbClient from './NullDbClient.js'
-//import Config from '../../../config.js'
+import config from "../../../config.js"
 
 let mongoClient = null
 
@@ -17,8 +17,7 @@ function getNullDbClient() {
 
 class DbClientFactory {
     static getDbClient() {
-        //switch (Config.db.client) {
-        switch ('mongodb') {
+        switch (config.db.client) {        
             case 'mongodb': return getMongoClient()
             default: return getNullDbClient()
         }

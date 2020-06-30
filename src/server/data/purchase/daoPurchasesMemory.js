@@ -60,7 +60,7 @@ class PurchasesDaoMemory extends PurchasesDao {
 
   async fillPurchaseItemsData(items) {
     const ids = items.map(i => i.product)
-    const products = await this.productsDao.getByIds(ids)
+    const products = await this.productsDao.getById(ids)
 
     items.forEach(item => {
       item.product = products.find(p => p.id == item.product)
@@ -69,7 +69,7 @@ class PurchasesDaoMemory extends PurchasesDao {
 
   async checkProducts(purchase) {
     const ids = purchase.items.map(i => i.product)
-    const products = await this.productsDao.getByIds(ids)
+    const products = await this.productsDao.getById(ids)
 
     if (products.length != ids.length) {
       const productsIds = products.map(p => p.id)

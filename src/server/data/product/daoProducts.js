@@ -1,5 +1,5 @@
 class ProductsDao {
-  async getByIds(ids) {
+  async getById(ids) {
     throw new Error("Not implemented");
   }
 
