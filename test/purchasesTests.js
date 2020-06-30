@@ -5,10 +5,12 @@ import PurchasePdfCreator from "../src/server/pdf/PurchasePdfCreator.js"
 import TwilioSender from "../src/server/notification/TwilioSender.js"
 import config from "../config.js"
 import PurchaseValidator from "../src/server/validators/PurchaseValidator.js"
+import PurchasesGet from "../src/server/features/purchases/PurchaseGet.js"
+
 
 export function addPurchase() {
   const purchase = {
-    client: 0,
+    client: 0,    
     items: [
       {
         quantity: 2,
@@ -19,14 +21,26 @@ export function addPurchase() {
         product: 1
       }      
     ]
-
   }
   const dao = PurchasesDAOFactory.getDao()
   const creator = new PdfCreator(new PurchasePdfCreator())
   const twilio = new TwilioSender(config.twilio)
   const validator = new PurchaseValidator()
-  const add = new PurchaseAdd(dao, creator, twilio, validator)
+  const add = new PurchaseAdd(dao, creator, twilio, validator)  
   add.run(purchase)
     .then((p) => console.log(`Pedido agregado: ${JSON.stringify(p)}`))
     .catch(e => console.log(e))
 }
+
+
+export function getAllPurchases(){
+  const dao = PurchasesDAOFactory.getDao()
+
+  const get = new PurchasesGet(dao)
+  let queryParams = new Map()
+  
+  get.run(queryParams)
+  .then(result => console.log(`Purchase ${JSON.stringify(result)}`))
+  .catch(e => console.log(e))
+}
+

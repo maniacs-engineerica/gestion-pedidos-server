@@ -77,6 +77,7 @@ class PurchasesDaoMemory extends PurchasesDao {
       throw new DaoError("producto inválido", `el item con id de producto: ${invalidId} no existe`);
     }
   }
+  
   async deletePurchase(id) {
     await this.getById(id)
     this.purchases = this.purchases.filter(purchase => purchase.id !== id)

@@ -9,11 +9,11 @@ export default class PurchaseGet {
         let purchases
 
         if(queryParams.size == 0) {
-        purchases = await this.dao.getAll()
+            purchases = await this.dao.getAll()
         } else if (queryParams.has('id')) {
-        purchases = await this.dao.getById(queryParams.get('id'))
+             purchases = await this.dao.getById(queryParams.get('id'))
         } else {
-        throw new InvalidRequestError("Parámetros de búsqueda inválidos", "No se encontró " + queryParams)
+            throw new InvalidRequestError("Parámetros de búsqueda inválidos", "No se encontró " + queryParams)
         }    
 
     return purchases

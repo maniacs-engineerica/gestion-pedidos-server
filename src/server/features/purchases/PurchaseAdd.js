@@ -1,5 +1,5 @@
 export default class PurchaseAdd {
-  constructor(dao, pdfCreator, notificator, validator) {
+  constructor(dao, pdfCreator, notificator, validator) {  
     this.dao = dao
     this.pdfCreator = pdfCreator
     this.notificator = notificator

@@ -8,9 +8,9 @@ export default class ProductUpdate {
   async run(product) {
     this.validator.validate(product)
 
-    if (product.image) {
+    /*if (product.image) {
       product.imageName = await this.uploader.upload(product.image)
-    }
+    }*/
 
     await this.dao.update(product)
 

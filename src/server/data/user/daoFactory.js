@@ -1,8 +1,15 @@
 import UsersDaoMemory from "./daoUsersMemory.js"
+import UsersDaoDB from "./daoUsersDB.js"
+import config from "../../../../config.js"
 
 class UsersDAOFactory {
     static getDao(){
-        return new UsersDaoMemory();
+        //switch(config.mode){         
+        switch('db'){      
+            case 'db' : return new UsersDaoDB();
+            case 'cache' : return new UsersDaoMemory();
+        default: throw "invalid mode. check system config!"
+        }
     }
 }
 

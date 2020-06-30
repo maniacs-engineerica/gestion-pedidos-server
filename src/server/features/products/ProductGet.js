@@ -10,13 +10,12 @@ export default class ProductGet {
         
         console.log(queryParams.size)
         if(queryParams.size == 0) {
-        products = await this.dao.getAll()
+            products = await this.dao.getAll()
         } else if (queryParams.has('id')) {
-        products = await this.dao.getById(queryParams.get('id'))
+            products = await this.dao.getById(queryParams.get('id'))        
         } else {
-        throw new InvalidRequestError("Parámetros de búsqueda inválidos", "No se encontró " + queryParams)
-        }    
-
+            throw new InvalidRequestError("Parámetros de búsqueda inválidos", "No se encontró " + queryParams)
+        }   
     return products
     }
 }
