@@ -6,7 +6,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "node -r dotenv/config src/main.js",
-    "test": "node test/index.js",
+    "test": "node -r dotenv/config test/index.js",
     "prod": "ENV=PROD node -r dotenv/config src/main.js"
   },
   "repository": {

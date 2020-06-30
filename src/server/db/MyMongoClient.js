@@ -50,7 +50,7 @@ class MyMongoClient extends DbClient {
         let db
         try {
             const client = await this._getClient()
-            db = client.db('pasteleria')//client.db(Config.db.name)
+            db = client.db('pasteleria')
         } catch (error) {
             throw new CustomError(500, 'error al conectarse a mongodb', error)
         }
