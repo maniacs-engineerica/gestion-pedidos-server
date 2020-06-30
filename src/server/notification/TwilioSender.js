@@ -1,6 +1,6 @@
 import Joi from '@hapi/joi'
 import twilio from "twilio"
-
+import SmsServiceError from '../errors/smsServiceError'
 import AbstractSender from "./AbstractSender.js";
 
 export default class TwilioSender extends AbstractSender {
@@ -22,7 +22,7 @@ export default class TwilioSender extends AbstractSender {
         .then(message => console.log(`Mensaje: ${message.body} \nEnviado a: ${message.to} `))
     }
     catch(err){
-        throw Error('Datos de mensaje inválidos')
+        throw new SmsServiceError('Error al enviar SMS', 'Datos del mensaje inválidos')
     }        
 }
 
@@ -33,7 +33,7 @@ export default class TwilioSender extends AbstractSender {
         this.authToken = config.authToken
         this.sender = config.sender
     } catch(error){
-        throw Error('Datos de configuracion inválidos')
+        throw new SmsServiceError('Error al configurar datos del proveedor','Datos de configuración inválidos')
     }        
   }
 
