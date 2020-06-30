@@ -5,8 +5,9 @@
   "description": "Server side project",
   "main": "src/main.js",
   "scripts": {
-    "start": "PORT=3000 node src/main.js",
-    "test": "node test/index.js"
+    "start": "node -r dotenv/config src/main.js",
+    "test": "node test/index.js",
+    "prod": "ENV=PROD node -r dotenv/config src/main.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "dependencies": {
     "@hapi/joi": "^15.0.2",
     "mongodb": "^3.5.9",
+    "dotenv": "^8.2.0",
     "pdfkit": "^0.11.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8",

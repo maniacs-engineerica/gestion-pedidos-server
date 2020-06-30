@@ -1,4 +1,4 @@
-import CustomError from '../errores/CustomError.js'
+import CustomError from '../errors/CustomError.js'
 import DbClient from './DbClient.js'
 
 class NullDbClient extends DbClient {

@@ -3,7 +3,8 @@ import ProductUpdate from "../features/products/ProductUpdate.js";
 import ProductValidator from "../validators/ProductValidator.js";
 import ImageUploader from "../uploaders/ImageUploader.js";
 import ProductAdd from "../features/products/ProductAdd.js";
-import ProductGet from "../features/products/ProductGet.js"
+import ProductGet from "../features/products/ProductGet.js";
+import ProductDelete from "../features/products/ProductDelete.js";
 
 class ProductsApi {
   constructor() {
@@ -28,6 +29,11 @@ class ProductsApi {
     const update = new ProductUpdate(this.dao, this.validator, this.uploader)
     await update.run(product)
   }
+  async deleteProduct(id) {
+    const deleting = new ProductDelete(this.dao);
+    deleting.deleteProduct(id)
+  
+    }
 
 }
 export default ProductsApi

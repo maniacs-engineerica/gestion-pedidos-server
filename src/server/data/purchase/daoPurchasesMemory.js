@@ -36,7 +36,7 @@ class PurchasesDaoMemory extends PurchasesDao {
   async getById(id) {
     const purchase = this.purchases.find(p => p.id == id)
     if (!purchase) {
-      throw new DaoError("pedido no existente", `no se encontró un pedidp para el id: ${id}`)
+      throw new DaoError("pedido no existente", `no se encontró un pedido para el id: ${id}`)
     }
 
     await this.fillPurchaseData(purchase)
@@ -77,6 +77,7 @@ class PurchasesDaoMemory extends PurchasesDao {
       throw new DaoError("producto inválido", `el item con id de producto: ${invalidId} no existe`);
     }
   }
+  
   async deletePurchase(id) {
     await this.getById(id)
     this.purchases = this.purchases.filter(purchase => purchase.id !== id)

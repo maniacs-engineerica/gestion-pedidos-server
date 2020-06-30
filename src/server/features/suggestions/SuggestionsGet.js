@@ -9,6 +9,7 @@ export default class SuggestionsGet{
     }
 
     async run(queryParams){
+        console.log("ENTRE A GET SUGGESTIONS")
 
          let user
  
@@ -26,7 +27,6 @@ export default class SuggestionsGet{
         if(suggestions == "") {
            throw "No se econtraron sugerencias para usuario"
         } else {
-           // console.log("ENTRE AL NOTIFICATOR")
             
             let mensaje = 'Las sugerencias para hoy son '
             let i = 0
@@ -45,7 +45,7 @@ export default class SuggestionsGet{
             console.log(mensaje)
             let b = user.phoneNumber.split(',').map(Number);
             console.log(b)
-            this._notifySuggestion(b,mensaje)
+            //this._notifySuggestion(b,mensaje)
         }   
         
         return suggestions

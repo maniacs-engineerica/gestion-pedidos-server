@@ -17,7 +17,7 @@ class ProductsDaoDB extends ProductsDao {
         let buscado
         try{
             const db = await this.dbcliente.getDb()
-            const products = await db.collection('products')  //Agregar al config         
+            const products = await db.collection('products')
             buscado = await products.findOne({id: id})    
         }
         catch(err){
@@ -49,8 +49,6 @@ class ProductsDaoDB extends ProductsDao {
             const db = await this.dbcliente.getDb()
             const collection = await db.collection('products')
             result = await collection.findOneAndUpdate({ id: product.id }, {$setOnInsert: product}, {upsert: true})
-            console.log(result)
-            
         } catch(err){
             throw new CustomError(500, 'error al insertar el producto', err)
         }

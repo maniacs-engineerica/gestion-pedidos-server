@@ -3,10 +3,11 @@ import { addPurchase, getAllPurchases } from "./purchasesTests.js"
 import { getSuggestions} from "./suggestionsTest.js"
 
 
-//updateProduct()
-//getAllPurchases()
-//getAllProducts()
-//addPurchase()
+updateProduct()
+addProduct()
+getAllProducts()
+addPurchase()
+getAllPurchases()
 getSuggestions()
 
-//addProduct()
+
