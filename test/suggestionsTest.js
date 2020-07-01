@@ -15,8 +15,8 @@ export function getSuggestions(){
     map.set("id",0)
     const queryParams = map
 
-    get.run(queryParams) //${JSON.stringify(suggest)}
-    .then((suggest) => console.log(`Sugerencias encontradas `))
+    get.run(queryParams) 
+    .then((suggest) => console.log(`Sugerencias encontradas ${JSON.stringify(suggest)}`))
     .catch((error) => console.log(error))
 
 }
